@@ -8,6 +8,10 @@ resource "azurerm_linux_virtual_machine" "f5_xc_ce_nodes" {
 
   admin_username = "volterra-admin"
 
+  boot_diagnostics {
+
+  }
+
   admin_ssh_key {
     username   = "volterra-admin"
     public_key = var.ssh_key
@@ -41,6 +45,7 @@ resource "azurerm_public_ip" "f5_xc_ce_nodes_pub-ip" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   allocation_method   = "Dynamic"
+  sku                 = "Standard"
 }
 
 resource "azurerm_network_interface" "ce-node-SLO-nic" {
