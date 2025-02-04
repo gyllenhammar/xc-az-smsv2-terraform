@@ -7,7 +7,6 @@ resource "azurerm_linux_virtual_machine" "f5_xc_ce_nodes" {
   network_interface_ids = [azurerm_network_interface.ce-node-SLO-nic[count.index].id]
 
   admin_username = "volterra-admin"
-  #admin_password = random_string.password.result
 
   admin_ssh_key {
     username   = "volterra-admin"
