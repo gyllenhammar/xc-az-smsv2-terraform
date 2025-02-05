@@ -28,11 +28,11 @@ variable "az_instance_type" {
   default = "Standard_B4as_v2"
 }
 
-variable "f5xc_node_count" {
-  type = number
-}
-
 variable "ssh_key" {
   type = string
 
+}
+
+variable "f5xc_enable_ce_site_ha" {
+  type = bool
 }

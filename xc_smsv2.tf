@@ -4,7 +4,7 @@ resource "volterra_securemesh_site_v2" "xc-securemesh-site" {
   block_all_services      = true
   logs_streaming_disabled = true
 
-  enable_ha = var.f5xc_node_count > 1 ? true : false
+  enable_ha = local.f5xc_node_count > 1 ? true : false
   offline_survivability_mode {
     enable_offline_survivability_mode = true
   }
