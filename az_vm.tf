@@ -62,6 +62,12 @@ resource "azurerm_network_interface" "ce-node-SLO-nic" {
   }
 }
 
+resource "azurerm_network_interface_security_group_association" "SLO-nsg-attachment" {
+  count                     = var.f5xc_node_count
+  network_interface_id      = azurerm_network_interface.ce-node-SLO-nic[count.index].id
+  network_security_group_id = azurerm_network_security_group.ce-slo-nsg.id
+}
+
 resource "azurerm_network_interface" "ce-node-SLI-nic" {
   count               = var.f5xc_node_count
   name                = "${var.resource_prefix}-ce-node-${count.index}-sli-nic"
