@@ -1,16 +1,16 @@
 resource "volterra_securemesh_site_v2" "xc-securemesh-site" {
-  name                    = format("%s-site-%s", var.resource_prefix, random_id.id.hex)
+  name                    = format("%s-site-%s", var.resource_prefix, random_id.suffix.hex)
   namespace               = "system"
   block_all_services      = true
   logs_streaming_disabled = true
+  enable_ha               = local.f5xc_node_count > 1 ? true : false
 
-  enable_ha = local.f5xc_node_count > 1 ? true : false
+  labels = {
+    "ves.io/provider" = "ves-io-AZURE"
+  }
+
   offline_survivability_mode {
     enable_offline_survivability_mode = true
-  }
-  labels = {
-    # (volterra_known_label_key.key.key) = (volterra_known_label.label.value)
-    "ves.io/provider" = "ves-io-AZURE"
   }
 
   re_select {
@@ -27,11 +27,10 @@ resource "volterra_securemesh_site_v2" "xc-securemesh-site" {
     ]
     create_before_destroy = true
   }
-  depends_on = [random_id.id]
 }
 
 resource "volterra_token" "smsv2-token" {
-  name      = "${var.resource_prefix}-token"
+  name      = "${var.resource_prefix}-token-${random_id.suffix.hex}"
   namespace = "system"
   type      = 1
   site_name = volterra_securemesh_site_v2.xc-securemesh-site.name

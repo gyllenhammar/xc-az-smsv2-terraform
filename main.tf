@@ -1,4 +1,4 @@
-resource "random_id" "id" {
+resource "random_id" "suffix" {
   byte_length = 2
 }
 
